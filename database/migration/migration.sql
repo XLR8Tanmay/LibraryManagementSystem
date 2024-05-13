@@ -44,5 +44,11 @@ CREATE TABLE memberships (
     `membership_type` INT,
     `membership_status` INT,
     `membership_expiry_date` DATETIME,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (membership_type) REFERENCES membership_type(id)
+);
+
+CREATE TABLE membership_type (
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+    `type` VARCHAR(50) UNIQUE
 );
