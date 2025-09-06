@@ -38,7 +38,15 @@ func main() {
 		authRoutes.GET("/get-all-books", handler.GetAllBooks)
 		authRoutes.POST("/logout", handler.Logout)
 	}
+
+	router.Run(":" + getAppServerPort())
+	fmt.Println("Library Management System running on port: ", getAppServerPort())
+}
+
+func getAppServerPort() string {
 	serverPort := os.Getenv("APP_PORT")
-	router.Run(":" + serverPort)
-	fmt.Println("Library Management System running on port: ", serverPort)
+	if len(serverPort) > 0 {
+		return serverPort
+	}
+	return "8000"
 }
