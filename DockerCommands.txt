@@ -1,0 +1,57 @@
+# Build the docker image with tag named library_management
+docker build -t library_management . 
+
+# Show all images
+docker images
+
+# Show all processes (containers)
+docker ps -a
+
+# Run the docker image of library_management exposing the port. (Will run in attached mode)
+docker run -p 8000:8000 library_management
+# Run the docker image of library_management in detached mode.
+docker run -p 8000:8000 -d library_management
+# Run the docker container by specifying a name
+docker run -p 8000:8000 --name {container_name} library_management
+
+# Run the container which is currently in stopped state. (Will run in detached mode)
+docker start {container_name}
+# Run the container which is currently in stopped state in attached mode)
+docker start -a {container_name}
+# Attached the container
+docker attach {container_name}
+
+# Stop the container (using container_name)
+docker stop {container_name}
+
+# Delete the exited container
+docker rm {container_name}
+
+# Delete a container as soon as it exits
+docker run -p 8000:8000 --rm library_management
+
+# Delete the image
+docker rmi {image_id}
+
+# Delete all the images
+docker image prune
+
+# Fetch the logs printed by a container
+docker logs {container_name}
+
+# Run a container in interactive mode (Useful for tasks where we need to input)
+docker run -it {image_name}
+
+# Get information of an image
+docker image inspect {image_name}
+
+# Copy a file into a container
+docker cp {path_of_file_to_be_copied} {container_name:/path_inside_container}
+
+# Copy a file from a container
+docker cp {container_name:/path_inside_container} {path_to_be_copied_to}
+
+
+
+
+

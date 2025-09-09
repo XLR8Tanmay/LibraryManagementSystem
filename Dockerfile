@@ -1,31 +1,25 @@
-# Step 1: Build the Go binary
-FROM golang:1.25-alpine AS builder
+# Use Go base image
+FROM golang:1.25-alpine
 
+# Set the working directory
 WORKDIR /app
 
-# Install git for Go module fetching
+# Install git for fetching Go modules
 RUN apk add --no-cache git
 
-# Copy dependency files first to leverage Docker cache
-COPY go.mod go.sum ./
+COPY go.mod go.sum /app
+
+# Download dependencies
 RUN go mod tidy
 
-# Copy the rest of the code
-COPY . .
+# Copy all files into the container
+COPY . /app
 
 # Build the Go binary
 RUN go build -o app .
 
-# Step 2: Create a minimal runtime image
-FROM alpine:3.20
-
-WORKDIR /app
-
-# Copy the compiled binary from the builder stage
-COPY --from=builder /app/app .
-
-# Expose port
+# Expose the application port
 EXPOSE 8000
 
-# Run the binary
+# Run the application
 CMD ["./app"]
