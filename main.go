@@ -5,8 +5,8 @@ import (
 	"os"
 
 	db "LibraryManagementSystem/database"
-	"LibraryManagementSystem/handler"
 	logger "LibraryManagementSystem/log"
+	"LibraryManagementSystem/routes"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -24,20 +24,8 @@ func init() {
 
 func main() {
 	router := gin.Default()
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Welcome to Library Management System!",
-		})
-	})
-	router.GET("/register", handler.Register)
-	router.GET("/login", handler.Login)
-
-	authRoutes := router.Group("/")
-	authRoutes.Use(handler.Authenticate)
-	{
-		authRoutes.GET("/get-all-books", handler.GetAllBooks)
-		authRoutes.POST("/logout", handler.Logout)
-	}
+	// Register all routes in one place
+	routes.RegisterRoutes(router)
 
 	router.Run(":" + getAppServerPort())
 	fmt.Println("Library Management System running on port: ", getAppServerPort())
